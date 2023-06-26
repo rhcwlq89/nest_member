@@ -6,7 +6,6 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  console.log(`${process.env.JWT_KEY}`);
   await app.listen(3000);
 }
 bootstrap();
