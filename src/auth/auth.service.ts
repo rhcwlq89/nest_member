@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/user/entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +12,12 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
+    const saltRound = 10; // 사용자 요구사항에 맞게 값 정의 가능
+    const salt = await bcrypt.genSalt(saltRound); // salt 생성
     const user = await this.userService.findOne(username);
-    if (!user || (user && !compare(password, user.password))) return null;
+    const hash = await bcrypt.hash(password, salt);
+    if (!user || (user && !compare(password, hash))) return null;
+    console.log(user);
     return await this.userService.findUser(user.id);
   }
 

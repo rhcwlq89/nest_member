@@ -9,18 +9,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123',
-      database: 'kmember',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
-  ],
+  imports: [],
   controllers: [UserController],
   providers: [
     UserService,

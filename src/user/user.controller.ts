@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Request,
-  Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
@@ -27,11 +26,7 @@ export class UserController {
 
   @UseGuards(AuthGuard('local'))
   @Post()
-  async login(
-    @Session() session,
-    @Request() req,
-    @Res({ passthrough: true }) response,
-  ): Promise<any> {
+  async login(@Session() session, @Request() req): Promise<any> {
     const access_token = await (
       await this.authservice.login(req.user)
     ).access_token;
