@@ -17,8 +17,7 @@ export class AuthService {
     const user = await this.userService.findOne(username);
     const hash = await bcrypt.hash(password, salt);
     if (!user || (user && !compare(password, hash))) return null;
-    console.log(user);
-    return await this.userService.findUser(user.id);
+    return await this.userService.findOne(user.id);
   }
 
   async signUp(req: any) {
@@ -26,7 +25,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { email: user.email };
     return {
       access_token: this.jwtService.sign(payload, {
         secret: `${process.env.JWT_KEY}`,

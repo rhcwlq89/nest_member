@@ -5,8 +5,8 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  async findOne(username: string): Promise<any> {
-    return userRepository.findBy({ username });
+  async findOne(email: string): Promise<any> {
+    return userRepository.findBy({ email });
   }
 
   async signUp(req: any) {
@@ -14,13 +14,9 @@ export class UserService {
     const salt = await bcrypt.genSalt(saltRound); // salt 생성
     const hash = await bcrypt.hash(req.password, salt);
     const usr = new User();
-    usr.username = req.username;
+    usr.email = req.email;
+    usr.name = req.name;
     usr.password = hash;
-    usr.isActive = true;
     return usr.save();
-  }
-
-  async findUser(userId: string): Promise<any> {
-    return { userId: 1, username: 'test', password: '123' };
   }
 }

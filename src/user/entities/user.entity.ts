@@ -3,14 +3,14 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  userUid: number;
 
   @Column()
-  username: string;
+  email: string;
+
+  @Column()
+  name: string;
 
   @Column()
   password: string;
-
-  @Column()
-  isActive: boolean;
 }
